@@ -1,41 +1,34 @@
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Link } from "@nextui-org/react";
-import { useState, useEffect } from "react";
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Link } from "@nextui-org/react";
 
-export const ModalServers = ({ selectedOpening }) => {
-
-    const { isOpen, onOpen, onClose } = useDisclosure();
-
-    const handleCloseModal = () => {
-        setSelectedOpening(null);
-        onClose();
-    }
+export const ModalServers = ({ isOpen, opening, onClose }) => {
 
     return (
         <Modal
             size="xs"
             isOpen={isOpen}
-            onClose={handleCloseModal}
+            onClose={onClose}
             placement="center"
         >
-            {selectedOpening && (
+            {opening && (
                 <ModalContent>
                     <ModalHeader className="flex flex-col gap-1">
                         Selecciona un servidor
                     </ModalHeader>
                     <ModalBody>
-                        {selectedOpening.video.map((server) => (
+                        {opening.video.map((server) => (
                             <Button size="md" key={server.service} as={Link} href={server.url} target="_blank" rel="noopener noreferrer">
                                 {server.service}
                             </Button>
                         ))}
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="danger" variant="light" onPress={handleCloseModal}>
+                        <Button color="danger" variant="light" onPress={onClose}>
                             Cerrar
                         </Button>
                     </ModalFooter>
                 </ModalContent>
             )}
         </Modal>
+
     )
 }
