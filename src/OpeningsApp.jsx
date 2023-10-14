@@ -1,8 +1,10 @@
-import { Route, Routes, Navigate } from "react-router-dom"
-import { HomePage } from "./pages/HomePage"
-import { NavBar } from "./components/NavBar"
-import { DashboardPage } from "./pages/DashboardPage"
-import { OpeningsPage } from "./pages/OpeningsPage"
+import { Route, Routes, Outlet, Link, BrowserRouter, Navigate } from 'react-router-dom';
+import PrivateRoute from './guard/PrivateRoute';
+import { LoginPage } from './pages/LoginPage';
+import { DashboardPage } from './pages/DashboardPage';
+import { HomePage } from './pages/HomePage';
+import { OpeningsPage } from './pages/OpeningsPage';
+import { NavBar } from './components/NavBar'
 
 export const OpeningsApp = () => {
     return (
@@ -10,10 +12,13 @@ export const OpeningsApp = () => {
             <NavBar></NavBar>
             <main className="container mx-auto mb-5 mt-4">
                 <Routes>
-                    <Route path="/" element={<HomePage></HomePage>}></Route>
-                    <Route path="/dashboard" element={<DashboardPage></DashboardPage>}></Route>
-                    <Route path="/opening/:id" element={<OpeningsPage></OpeningsPage>}></Route>
-                    <Route path="/*" element={<Navigate to='/' />}></Route>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/dashboard" element={<PrivateRoute roles={['admin']} />}>
+                        <Route index element={<DashboardPage />} />
+                    </Route>
+                    <Route path="/opening/:openingId" element={<OpeningsPage />} />
+                    <Route path="/login" element={<LoginPage />} />
+                    <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
             </main>
         </>
