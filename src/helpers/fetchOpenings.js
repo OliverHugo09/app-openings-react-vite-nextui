@@ -29,7 +29,6 @@ export const fetchOpeningById = async (openingId) => {
         if (openingDoc.exists()) {
             // El documento existe, devolvemos los datos
             return { ...openingDoc.data(), id: openingDoc.id }
-            console.log(openingDoc)
         } else {
             // El documento no existe, devolvemos null o una respuesta apropiada
             return null

@@ -11,7 +11,6 @@ export const OpeningsPage = () => {
     useEffect(() => {
         // Utiliza el 'openingId' obtenido de la ruta en lugar de un valor estático
         const fetchOpening = async () => {
-            console.log(openingId)
             const opening = await fetchOpeningById(openingId)
             setSelectedOpening(opening)
             if (opening && opening.video.length > 0) {
