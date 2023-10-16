@@ -1,14 +1,9 @@
-import { Card, CardHeader, CardBody, Image, Link } from "@nextui-org/react";
-import { useEffect } from "react";
-import { useOpeningsData } from "../hooks/useOpeningsData";
+import { Card, CardHeader, CardBody, Image, Link } from "@nextui-org/react"
+import { useOpenings } from "../context/OpeningsProvider"
 
 export const CardOpening = () => {
 
-    const { openings, fetchopening } = useOpeningsData()
-
-    useEffect(() => {
-        fetchopening()
-    }, [])
+    const { openings } = useOpenings()
 
     return (
         <>
