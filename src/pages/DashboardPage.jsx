@@ -1,9 +1,10 @@
-import { FormAddOpening } from "../components/FormAddOpening"
+
+import { DashboardTableOpenings } from "../components/DashboardTableOpenings"
 
 export const DashboardPage = () => {
     return (
         <div className="m-5">
-            <FormAddOpening />
+            <DashboardTableOpenings />
         </div>
     )
 }

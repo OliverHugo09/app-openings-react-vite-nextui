@@ -1,26 +1,21 @@
 import { Input, Button } from "@nextui-org/react"
-import { EyeFilledIcon } from "../components/EyeFilledIcon"
-import { EyeSlashFilledIcon } from "../components/EyeSlashFilledIcon"
-import { useEffect, useState } from "react"
-import { fetchUsersById } from "../helpers/fetchUser"
+import { EyeFilledIcon } from "../icons/EyeFilledIcon"
+import { EyeSlashFilledIcon } from "../icons/EyeSlashFilledIcon"
+import { useState, useContext } from "react"
+import { useAuth } from "../context/AuthProvider"
 
 export const LoginPage = () => {
     const [isVisible, setIsVisible] = useState(false)
     const toggleVisibility = () => setIsVisible(!isVisible)
 
-    const { userId } = import.meta.env.VITE_USER_ID
-    const [user, setUser] = useState([])
+    const [email, setEmail] = useState(""); // Estado para el correo electrónico
+    const [password, setPassword] = useState("");
 
-    useEffect(() => {
-        // Utiliza el 'openingId' obtenido de la ruta en lugar de un valor estático
-        const fetchUser = async () => {
-            const user = await fetchUsersById(userId)
-            setUser(user)
-            console.log(setUser)
-        }
-        fetchUser()
-    }, [userId])
+    const { login } = useAuth(); // Obtiene la función login desde el contexto
 
+    const handleLogin = () => {
+        login(email, password); // Llama a la función login para verificar las credenciales
+    }
 
     return (
         <div className="mt-16 py-6 flex flex-col justify-center sm:py-12">
@@ -36,7 +31,9 @@ export const LoginPage = () => {
                         <div className="divide-y divide-gray-200">
                             <div className="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
                                 <div className="relative">
-                                    <Input type="email" variant="bordered" label="Email" />
+                                    <Input type="email" variant="bordered" label="Email"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)} />
                                 </div>
                                 <div className="relative">
                                     <Input
@@ -52,11 +49,13 @@ export const LoginPage = () => {
                                             </button>
                                         }
                                         type={isVisible ? "text" : "password"}
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
                                     />
 
                                 </div>
                                 <div className="relative">
-                                    <Button color="primary">
+                                    <Button color="primary" onClick={handleLogin}>
                                         Iniciar Sesión
                                     </Button>
                                 </div>

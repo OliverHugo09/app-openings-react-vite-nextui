@@ -3,8 +3,7 @@ import { useContext, useEffect } from "react"
 import { useOpeningsData } from "../hooks/useOpeningsData"
 
 export const useOpenings = () => {
-    const context = useContext(OpeningsContext)
-    return context
+    return useContext(OpeningsContext)
 }
 
 export const OpeningsProvider = ({ children }) => {
