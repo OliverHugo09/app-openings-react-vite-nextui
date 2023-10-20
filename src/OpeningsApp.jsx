@@ -20,19 +20,6 @@ export const OpeningsApp = () => {
                 <Routes>
                     {/* <Route index element={<HomePage />} /> */}
                     <Route path="/admin/*" element={<AdminPanelApp />} />
-
-                    {/* <Route
-                        path="/delete"
-                        element={
-                            <ProtectedRoute
-                                redirectTo="/login"
-                                isAllowed={!!user && user.roles.includes("admin")}
-                            >
-                                <Analytics />
-                            </ProtectedRoute>
-                        }
-                    /> */}
-
                     <Route path="/" element={<HomePage />} />
                     <Route path="/opening/:openingId" element={<OpeningsPage />} />
                     <Route path="/login" element={<LoginPage />} />
