@@ -8,6 +8,5 @@ export const ProtectedRoute = ({
     if (!isAllowed) {
         return <Navigate to={redirectTo} replace />
     }
-
     return children ? children : <Outlet />
 }

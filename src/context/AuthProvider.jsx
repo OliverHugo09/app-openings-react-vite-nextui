@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }) => {
         // Realiza la comprobación de credenciales aquí
         if (email === userValidation.email && password === userValidation.password) {
             setUser(userValidation)
-            navigate("/dashboard")
+            navigate("admin/dashboard")
         } else {
             setUser(null)
         }
