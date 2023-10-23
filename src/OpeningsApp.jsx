@@ -4,18 +4,13 @@ import { OpeningsPage } from './pages/OpeningsPage'
 import { NavBar } from './components/NavBar'
 import { LoginPage } from './pages/LoginPage'
 import { OpeningsProvider } from './context/OpeningsProvider'
-import { useContext } from 'react'
-import { AuthContext } from './context/AuthContext'
 import { AdminPanelApp } from './AdminPanelApp'
 
 export const OpeningsApp = () => {
 
-    const { user } = useContext(AuthContext)
-    const userCommon = true
-
     return (
         <OpeningsProvider>
-            {userCommon ? <NavBar /> : <></>}
+            <NavBar />
             <main className="container mx-auto mb-5 mt-4">
                 <Routes>
                     {/* <Route index element={<HomePage />} /> */}

@@ -1,7 +1,15 @@
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button } from "@nextui-org/react";
 import { NavLink } from 'react-router-dom'
+import { useAuth } from "../context/AuthProvider"
 
 export const NavBar = () => {
+    const { user } = useAuth()
+    const { logout } = useAuth()
+
+    const handleLogout = () => {
+        logout() // Llama a la función login para verificar las credenciales
+    }
+    // {userCommon ? <NavBar /> : <></>}
     return (
         <Navbar isBordered>
             <NavbarBrand>
@@ -31,9 +39,15 @@ export const NavBar = () => {
 
                 </NavbarItem>
                 <NavbarItem>
-                    <NavLink to='/login'>
-                        <span className="text-blue-600">Login</span>
-                    </NavLink>
+                    {!user ?
+                        <NavLink to='/login'>
+                            <span className="text-blue-600">Login</span>
+                        </NavLink>
+                        :
+                        <NavLink to='/'>
+                            <span className="text-blue-600">Logout</span>
+                        </NavLink>
+                    }
                 </NavbarItem>
             </NavbarContent>
         </Navbar>

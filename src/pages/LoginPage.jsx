@@ -8,13 +8,13 @@ export const LoginPage = () => {
     const [isVisible, setIsVisible] = useState(false)
     const toggleVisibility = () => setIsVisible(!isVisible)
 
-    const [email, setEmail] = useState(""); // Estado para el correo electrónico
-    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("") // Estado para el correo electrónico
+    const [password, setPassword] = useState("")
 
-    const { login } = useAuth(); // Obtiene la función login desde el contexto
+    const { login } = useAuth() // Obtiene la función login desde el contexto
 
     const handleLogin = () => {
-        login(email, password); // Llama a la función login para verificar las credenciales
+        login(email, password) // Llama a la función login para verificar las credenciales
     }
 
     return (
