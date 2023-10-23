@@ -11,6 +11,14 @@ const statusColorMap = {
     fix: "warning",
 }
 
+const columns = [
+    { name: "NOMBRE", uid: "name" },
+    { name: "ESTADO", uid: "status" },
+    { name: "CREADO EL", uid: "timestap" },
+    { name: "ACCIONES", uid: "actions" },
+
+]
+
 const getCellValue = (opening, columnKey) => {
     if (columnKey === "name") {
         const img = opening.img || "https://placehold.co/60x60"
@@ -33,15 +41,6 @@ const getCellValue = (opening, columnKey) => {
 export const DashboardTableOpenings = () => {
 
     const { openings } = useOpenings()
-
-    console.log(openings)
-
-    const columns = [
-        { name: "NOMBRE", uid: "name" },
-        { name: "STATUS", uid: "status" },
-        { name: "ACTIONS", uid: "actions" },
-
-    ]
 
     const renderCell = useCallback((opening, columnKey) => {
         const cellValue = getCellValue(opening, columnKey)
@@ -87,7 +86,6 @@ export const DashboardTableOpenings = () => {
                     </div>
                 )
             default:
-                console.log(cellValue)
                 return cellValue
         }
     }, [])
