@@ -1,4 +1,4 @@
-import { Dropdown, Link, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@nextui-org/react"
+import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@nextui-org/react"
 import { useEffect, useState } from "react"
 import { fetchOpeningById } from "../helpers/fetchOpenings"
 import { useParams } from "react-router-dom"
@@ -16,13 +16,13 @@ export const OpeningsPage = () => {
             if (opening && opening.video.length > 0) {
                 setSelectedServer(opening.video[0].url)
             }
-        };
+        }
         fetchOpening()
     }, [openingId])
 
     const handleSelectServer = (server) => {
-        setSelectedServer(server.url);
-    };
+        setSelectedServer(server.url)
+    }
 
     return (
         <section className="grid grid-cols-1">
@@ -38,19 +38,6 @@ export const OpeningsPage = () => {
                     </div>
                 </div>
             </div>
-
-            {/* Metodo por botones */}
-            {/* <div className="grid grid-cols-2 gap-2 mt-2">
-                {selectedOpening?.video.map((server, index) => (
-                    <Button
-                        key={index}
-                        onPress={() => handleSelectServer(server)}
-                    >
-                        {server.service}
-                    </Button>
-
-                ))}
-            </div> */}
 
             <div className="grid grid-cols-1 gap-2 mt-2 place-items-center">
                 <Dropdown>
@@ -72,5 +59,5 @@ export const OpeningsPage = () => {
             </div>
         </section>
 
-    );
-};
+    )
+}

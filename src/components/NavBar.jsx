@@ -1,5 +1,5 @@
-import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button } from "@nextui-org/react";
-import { NavLink, useLocation } from 'react-router-dom'
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@nextui-org/react";
+import { NavLink } from 'react-router-dom'
 import { useAuth } from "../context/AuthProvider"
 
 const navigation = [
@@ -11,7 +11,6 @@ const navigation = [
 export const NavBar = () => {
     const { user } = useAuth()
     const { logout } = useAuth()
-    // const { useLocation} = useLocation()
 
     const handleLogout = () => {
         logout()
