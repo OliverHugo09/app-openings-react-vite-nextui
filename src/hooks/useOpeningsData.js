@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useMemo } from "react"
 import { fetchopenings } from "../helpers/fetchOpenings"
 
 export const useOpeningsData = () => {
@@ -16,5 +16,8 @@ export const useOpeningsData = () => {
         }
     }
 
-    return { openings, error, fetchopening }
+    // Utiliza useMemo para memoizar la variable "openings"
+    const memoizedOpenings = useMemo(() => openings, [openings])
+
+    return { openings: memoizedOpenings, error, fetchopening }
 }

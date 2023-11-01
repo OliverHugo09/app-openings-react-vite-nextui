@@ -8,6 +8,7 @@ import { DeleteIcon } from "../icons/DeleteIcon"
 import { EyeFilledIcon } from "../icons/EyeFilledIcon"
 import { useCallback, useState } from "react"
 import { useOpenings } from "../context/OpeningsProvider"
+import { format, isValid, parseISO } from 'date-fns'
 
 const statusColorMap = {
     active: "success",
@@ -18,7 +19,7 @@ const statusColorMap = {
 const columns = [
     { name: "NOMBRE", uid: "name" },
     { name: "ESTADO", uid: "status" },
-    { name: "CREADO EL", uid: "timestap" },
+    { name: "CREADO EL", uid: "timestamp" },
     { name: "ACCIONES", uid: "actions" },
 
 ]
@@ -38,8 +39,19 @@ const getCellValue = (opening, columnKey) => {
             fix: "Mantenimiento",
         }
         return statusMap[status] || "Estatus no disponible"
+    } else if (columnKey === "timestamp") {
+        const time = opening.time;
+
+        if (time instanceof Date) {
+            // Si opening.time ya es una fecha de JavaScript, puedes formatearla directamente
+            const formattedDate = format(time, "dd/MM/yyyy HH:mm:ss");
+            return formattedDate;
+        } else {
+            // Si opening.time no es una fecha de JavaScript válida, puedes mostrar "Fecha no válida"
+            return "Fecha no válida";
+        }
     }
-    return opening[columnKey] || "Valor no disponible"
+    return opening[columnKey] || "Valor no disponible";
 }
 
 export const DashboardTableOpenings = () => {
@@ -80,6 +92,17 @@ export const DashboardTableOpenings = () => {
                         {cellValue}
                     </Chip>
                 )
+            case "timestamp":
+                if (cellValue) {
+                    // Comprueba si cellValue es una fecha válida
+                    if (isValid(new Date(cellValue))) {
+                        // Formatea la fecha
+                        const formattedDate = format(parseISO(cellValue), "dd/MM/yyyy HH:mm:ss");
+                        return formattedDate;
+                    } else {
+                        return "Fecha no válida";
+                    }
+                }
             case "actions":
                 return (
                     <div className="relative flex items-center gap-2">

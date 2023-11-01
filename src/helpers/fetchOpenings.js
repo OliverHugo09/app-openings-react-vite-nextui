@@ -1,5 +1,6 @@
 import { db } from "../helpers/firebase-config"
-import { collection, getDocs, doc, getDoc } from "firebase/firestore"
+import { collection, getDocs, doc, getDoc, addDoc } from "firebase/firestore"
+import { getFirestoreTimestamp } from "../helpers/firebase-config"
 
 export const fetchopenings = async () => {
 
@@ -37,5 +38,22 @@ export const fetchOpeningById = async (openingId) => {
         // Maneja el error y devuelve una respuesta apropiada, como null
         console.error(error)
         return null
+    }
+}
+
+export const addOpening = async (openingData) => {
+    const openingsCollectionRef = collection(db, "openings");
+
+    try {
+        const dataToSave = {
+            ...openingData,
+            time: getFirestoreTimestamp(), // Agrega el timestamp al objeto principal
+        };
+
+        const newOpeningRef = await addDoc(openingsCollectionRef, dataToSave);
+        return newOpeningRef.id;
+    } catch (error) {
+        console.error(error);
+        return null;
     }
 }
