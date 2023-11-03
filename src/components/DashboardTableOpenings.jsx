@@ -19,7 +19,8 @@ const statusColorMap = {
 const columns = [
     { name: "NOMBRE", uid: "name" },
     { name: "ESTADO", uid: "status" },
-    { name: "CREADO EL", uid: "timestamp" },
+    { name: "CREADO EL", uid: "date" },
+    { name: "A LAS", uid: "time" },
     { name: "ACCIONES", uid: "actions" },
 
 ]
@@ -39,19 +40,28 @@ const getCellValue = (opening, columnKey) => {
             fix: "Mantenimiento",
         }
         return statusMap[status] || "Estatus no disponible"
-    } else if (columnKey === "timestamp") {
-        const time = opening.time;
-
-        if (time instanceof Date) {
-            // Si opening.time ya es una fecha de JavaScript, puedes formatearla directamente
-            const formattedDate = format(time, "dd/MM/yyyy HH:mm:ss");
-            return formattedDate;
-        } else {
-            // Si opening.time no es una fecha de JavaScript válida, puedes mostrar "Fecha no válida"
-            return "Fecha no válida";
+    } else if (columnKey === "date") {
+        const time = opening.time
+        const fireBaseTime = new Date(
+            time.seconds * 1000 + time.nanoseconds / 1000000,
+        )
+        const options = {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
         }
+        const date = fireBaseTime.toLocaleDateString('es-MX', options)
+        return date
+    } else if (columnKey === "time") {
+        const time = opening.time
+        const fireBaseTime = new Date(
+            time.seconds * 1000 + time.nanoseconds / 1000000,
+        )
+        const atTime = fireBaseTime.toLocaleTimeString('en-US')
+        return atTime
     }
-    return opening[columnKey] || "Valor no disponible";
+    return opening[columnKey] || "Valor no disponible"
 }
 
 export const DashboardTableOpenings = () => {
@@ -92,17 +102,6 @@ export const DashboardTableOpenings = () => {
                         {cellValue}
                     </Chip>
                 )
-            case "timestamp":
-                if (cellValue) {
-                    // Comprueba si cellValue es una fecha válida
-                    if (isValid(new Date(cellValue))) {
-                        // Formatea la fecha
-                        const formattedDate = format(parseISO(cellValue), "dd/MM/yyyy HH:mm:ss");
-                        return formattedDate;
-                    } else {
-                        return "Fecha no válida";
-                    }
-                }
             case "actions":
                 return (
                     <div className="relative flex items-center gap-2">
@@ -113,7 +112,7 @@ export const DashboardTableOpenings = () => {
                                 className="text-lg text-default-400 bg-transparent"
                                 isIconOnly
                                 onPress={() => {
-                                    handleOpening(opening); // Cambiar 'item' a 'opening'
+                                    handleOpening(opening) // Cambiar 'item' a 'opening'
 
                                 }}>
                                 <EyeFilledIcon />
