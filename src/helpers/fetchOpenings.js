@@ -1,12 +1,11 @@
 import { db } from "../helpers/firebase-config"
-import { collection, getDocs, doc, getDoc, addDoc } from "firebase/firestore"
+import { collection, getDocs, doc, getDoc, addDoc, updateDoc, deleteDoc } from "firebase/firestore"
 import { getFirestoreTimestamp } from "../helpers/firebase-config"
 
 export const fetchopenings = async () => {
 
     //const [openings, setOpenings] = useState([]);
     const openingsCollectionRef = collection(db, "openings")
-
     try {
         const data = await getDocs(openingsCollectionRef)
         if (data) {
@@ -55,5 +54,19 @@ export const addOpening = async (openingData) => {
     } catch (error) {
         console.error(error);
         return null;
+    }
+}
+
+export const deleteElementInOpening = async (openingId) => {
+    try {
+        // Obtén una referencia al documento que deseas eliminar
+        const openingDocRef = doc(db, "openings", openingId);
+
+        // Elimina el documento en Firestore
+        await deleteDoc(openingDocRef);
+
+        console.log("Elemento eliminado exitosamente");
+    } catch (error) {
+        console.error("Error al eliminar el elemento:", error);
     }
 }

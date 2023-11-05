@@ -8,7 +8,7 @@ import { DeleteIcon } from "../icons/DeleteIcon"
 import { EyeFilledIcon } from "../icons/EyeFilledIcon"
 import { useCallback, useState } from "react"
 import { useOpenings } from "../context/OpeningsProvider"
-import { format, isValid, parseISO } from 'date-fns'
+import { deleteElementInOpening } from "../helpers/fetchOpenings"
 
 const statusColorMap = {
     active: "success",
@@ -79,6 +79,11 @@ export const DashboardTableOpenings = () => {
         setSelectedServer(server.url)
     }
 
+    const handleDeleteOpening = (openingId) => {
+        // Llama a la función para eliminar el elemento en una apertura específica
+        deleteElementInOpening(openingId);
+    }
+
     const renderCell = useCallback((opening, columnKey) => {
         const cellValue = getCellValue(opening, columnKey)
 
@@ -124,7 +129,7 @@ export const DashboardTableOpenings = () => {
                             </Button>
                         </Tooltip>
                         <Tooltip color="danger" content="Borrar opening">
-                            <Button size="sm" color="danger" variant="bordered" className="text-lg text-danger bg-transparent" isIconOnly onPress={onOpen}>
+                            <Button size="sm" color="danger" variant="bordered" className="text-lg text-danger bg-transparent" isIconOnly onClick={() => handleDeleteOpening(opening.id)}>
                                 <DeleteIcon />
                             </Button>
                         </Tooltip>

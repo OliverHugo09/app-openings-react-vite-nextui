@@ -12,6 +12,7 @@ export const FormAddOpening = () => {
             { service: "", url: "" },
         ],
         status: "active",
+        reported: 0
     });
 
     const handleChangeInputImage = () => {
