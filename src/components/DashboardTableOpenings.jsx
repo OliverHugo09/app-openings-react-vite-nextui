@@ -8,7 +8,7 @@ import { DeleteIcon } from "../icons/DeleteIcon"
 import { EyeFilledIcon } from "../icons/EyeFilledIcon"
 import { useCallback, useState } from "react"
 import { useOpenings } from "../context/OpeningsProvider"
-import { deleteElementInOpening } from "../helpers/fetchOpenings"
+import { deleteElementInOpening } from "../helpers/crudOpenings"
 
 const statusColorMap = {
     active: "success",
@@ -41,6 +41,7 @@ const getCellValue = (opening, columnKey) => {
         }
         return statusMap[status] || "Estatus no disponible"
     } else if (columnKey === "date") {
+        // Calcula la fecha
         const time = opening.time
         const fireBaseTime = new Date(
             time.seconds * 1000 + time.nanoseconds / 1000000,
@@ -54,6 +55,7 @@ const getCellValue = (opening, columnKey) => {
         const date = fireBaseTime.toLocaleDateString('es-MX', options)
         return date
     } else if (columnKey === "time") {
+        // Calcula la hora
         const time = opening.time
         const fireBaseTime = new Date(
             time.seconds * 1000 + time.nanoseconds / 1000000,
@@ -139,7 +141,6 @@ export const DashboardTableOpenings = () => {
                 return cellValue
         }
     }, [])
-
 
     return (
         <>

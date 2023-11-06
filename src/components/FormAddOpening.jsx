@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "@nextui-org/react";
-import { addOpening } from "../helpers/fetchOpenings";
+import { addOpening } from "../helpers/crudOpenings";
 
 export const FormAddOpening = () => {
     const [displayImageInput, setDisplayImageInput] = useState(true);

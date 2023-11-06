@@ -1,6 +1,6 @@
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@nextui-org/react"
 import { useEffect, useState } from "react"
-import { fetchOpeningById } from "../helpers/fetchOpenings"
+import { fetchOpeningById } from "../helpers/crudOpenings"
 import { useParams } from "react-router-dom"
 
 export const OpeningsPage = () => {

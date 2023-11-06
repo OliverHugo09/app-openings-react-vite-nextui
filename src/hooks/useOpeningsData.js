@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react"
-import { fetchopenings } from "../helpers/fetchOpenings"
+import { fetchopenings } from "../helpers/crudOpenings"
 
 export const useOpeningsData = () => {
 
