@@ -1,23 +1,25 @@
-import { useState, useMemo } from "react"
+import { useState, useEffect } from "react"
 import { fetchopenings } from "../helpers/crudOpenings"
 
 export const useOpeningsData = () => {
 
     const [openings, setOpenings] = useState([]);
-    const [error, setError] = useState(null)
+    const [error, setError] = useState(null);
 
     const fetchopening = async () => {
         try {
-            const data = await fetchopenings()
-            setOpenings(data)
+            const data = await fetchopenings();
+            setOpenings(data);
             setError(null);
         } catch (error) {
-            setError("No se pudieron encontrar los openings")
+            setError("No se pudieron encontrar los openings");
         }
     }
 
-    // Utiliza useMemo para memoizar la variable "openings"
-    const memoizedOpenings = useMemo(() => openings, [openings])
+    // Store the fetched data in local state.
+    useEffect(() => {
+        fetchopening();
+    }, [openings]);
 
-    return { openings: memoizedOpenings, error, fetchopening }
+    return { openings, error };
 }

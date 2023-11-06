@@ -8,11 +8,7 @@ export const useOpenings = () => {
 
 export const OpeningsProvider = ({ children }) => {
 
-    const { openings, fetchopening } = useOpeningsData()
-
-    useEffect(() => {
-        fetchopening()
-    }, [])
+    const { openings } = useOpeningsData()
 
     return (
         <OpeningsContext.Provider value={{ openings }}>

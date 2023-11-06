@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react"
-import { Navigate } from "react-router-dom"
 import { fetchUsersById } from "../helpers/fetchUser"
 
 export const useUsersData = () => {
@@ -17,5 +16,10 @@ export const useUsersData = () => {
         }
     }
 
-    return { user, error, fetchUser, login }
+    // Store the fetched data in local state.
+    useEffect(() => {
+        fetchUser();
+    }, []);
+
+    return { user, error, login }
 }

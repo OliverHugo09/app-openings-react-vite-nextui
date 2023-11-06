@@ -41,27 +41,31 @@ const getCellValue = (opening, columnKey) => {
         }
         return statusMap[status] || "Estatus no disponible"
     } else if (columnKey === "date") {
-        // Calcula la fecha
-        const time = opening.time
-        const fireBaseTime = new Date(
-            time.seconds * 1000 + time.nanoseconds / 1000000,
-        )
-        const options = {
-            weekday: 'long',
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
+        if (opening.time) {
+            // Calcula la fecha
+            const time = opening.time
+            const fireBaseTime = new Date(
+                time.seconds * 1000 + time.nanoseconds / 1000000,
+            )
+            const options = {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            }
+            const date = fireBaseTime.toLocaleDateString('es-MX', options)
+            return date
         }
-        const date = fireBaseTime.toLocaleDateString('es-MX', options)
-        return date
     } else if (columnKey === "time") {
-        // Calcula la hora
-        const time = opening.time
-        const fireBaseTime = new Date(
-            time.seconds * 1000 + time.nanoseconds / 1000000,
-        )
-        const atTime = fireBaseTime.toLocaleTimeString('en-US')
-        return atTime
+        if (opening.time) {
+            // Calcula la hora
+            const time = opening.time
+            const fireBaseTime = new Date(
+                time.seconds * 1000 + time.nanoseconds / 1000000,
+            )
+            const atTime = fireBaseTime.toLocaleTimeString('en-US')
+            return atTime
+        }
     }
     return opening[columnKey] || "Valor no disponible"
 }
@@ -83,7 +87,7 @@ export const DashboardTableOpenings = () => {
 
     const handleDeleteOpening = (openingId) => {
         // Llama a la función para eliminar el elemento en una apertura específica
-        deleteElementInOpening(openingId);
+        deleteElementInOpening(openingId)
     }
 
     const renderCell = useCallback((opening, columnKey) => {

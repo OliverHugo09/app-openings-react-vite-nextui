@@ -19,6 +19,7 @@ export const AuthProvider = ({ children }) => {
         const fetchUser = async () => {
             const userbyId = await fetchUsersById(userId)
             setUserValidation(userbyId)
+            console.log("ejecución del usuario provider")
         }
         fetchUser()
     }, [userId])
@@ -28,6 +29,7 @@ export const AuthProvider = ({ children }) => {
         if (email === userValidation.email && password === userValidation.password) {
             setUser(userValidation)
             navigate("admin/dashboard")
+            console.log("proceso de login")
         } else {
             setUser(null)
         }

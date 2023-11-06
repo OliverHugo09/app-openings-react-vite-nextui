@@ -9,6 +9,7 @@ export const fetchopenings = async () => {
     try {
         const data = await getDocs(openingsCollectionRef)
         if (data) {
+            console.log("fetch de todos los openings")
             return data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
         } else {
             // Si no se encontraron datos, devuelve un arreglo vacío o null según corresponda
@@ -28,6 +29,7 @@ export const fetchOpeningById = async (openingId) => {
         const openingDoc = await getDoc(openingsCollectionRef)
         if (openingDoc.exists()) {
             // El documento existe, devolvemos los datos
+            console.log("fetch de opening por id")
             return { ...openingDoc.data(), id: openingDoc.id }
         } else {
             // El documento no existe, devolvemos null o una respuesta apropiada
@@ -50,6 +52,7 @@ export const addOpening = async (openingData) => {
         };
 
         const newOpeningRef = await addDoc(openingsCollectionRef, dataToSave);
+        console.log("proceso de creación de opening")
         return newOpeningRef.id;
     } catch (error) {
         console.error(error);
