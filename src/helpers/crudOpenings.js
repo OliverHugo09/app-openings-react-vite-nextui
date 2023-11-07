@@ -1,26 +1,6 @@
 import { db } from "./firebase-config"
-import { collection, getDocs, doc, getDoc, addDoc, updateDoc, deleteDoc } from "firebase/firestore"
+import { collection, doc, getDoc, addDoc, updateDoc, deleteDoc } from "firebase/firestore"
 import { getFirestoreTimestamp } from "./firebase-config"
-
-export const fetchopenings = async () => {
-
-    //const [openings, setOpenings] = useState([]);
-    const openingsCollectionRef = collection(db, "openings")
-    try {
-        const data = await getDocs(openingsCollectionRef)
-        if (data) {
-            console.log("fetch de todos los openings")
-            return data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-        } else {
-            // Si no se encontraron datos, devuelve un arreglo vacío o null según corresponda
-            return []
-        }
-    } catch (error) {
-        // Maneja el error y devuelve una respuesta apropiada, como un arreglo vacío o null
-        console.error(error)
-        return []
-    }
-}
 
 export const fetchOpeningById = async (openingId) => {
     const openingsCollectionRef = doc(db, "openings", openingId)
