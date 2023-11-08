@@ -9,6 +9,7 @@ import { EyeFilledIcon } from "../icons/EyeFilledIcon"
 import { useCallback, useState } from "react"
 import { useOpenings } from "../context/OpeningsProvider"
 import { deleteElementInOpening } from "../helpers/crudOpenings"
+import { FormUpdateOpening } from "../components/FormUpdateOpening"
 
 const statusColorMap = {
     active: "success",
@@ -74,10 +75,18 @@ export const DashboardTableOpenings = () => {
     const { isOpen, onOpen, onOpenChange } = useDisclosure()
     const { openings } = useOpenings()
     const [selectedOpening, setSelectedOpening] = useState(null)
+    const [updateOpening, setUpdateOpening] = useState(null)
     const [selectedServer, setSelectedServer] = useState(null)
 
     const handleOpening = (opening) => {
         setSelectedOpening(opening)
+        setUpdateOpening(null)
+        onOpen()
+    }
+
+    const handleUpdateOpening = (opening) => {
+        setUpdateOpening(opening)
+        setSelectedOpening(null)
         onOpen()
     }
 
@@ -130,7 +139,7 @@ export const DashboardTableOpenings = () => {
                             </Button>
                         </Tooltip>
                         <Tooltip color="warning" content="Editar opening">
-                            <Button size="sm" color="warning" variant="bordered" className="text-lg text-warning bg-transparent" isIconOnly onPress={onOpen}>
+                            <Button size="sm" color="warning" variant="bordered" className="text-lg text-warning bg-transparent" isIconOnly onPress={() => { handleUpdateOpening(opening) }}>
                                 <EditIcon />
                             </Button>
                         </Tooltip>
@@ -206,7 +215,11 @@ export const DashboardTableOpenings = () => {
                                         </div>
                                     </section>
                                 ) : (
-                                    <p>Selecciona una apertura para ver los detalles.</p>
+                                    updateOpening ? (
+                                        <FormUpdateOpening openingId={updateOpening.id} />
+                                    ) : (
+                                        <p>Selecciona una apertura para ver los detalles o muestra el formulario de edición.</p>
+                                    )
                                 )}
                             </ModalBody>
                             <ModalFooter>

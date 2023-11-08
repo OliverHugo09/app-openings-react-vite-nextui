@@ -40,6 +40,23 @@ export const addOpening = async (openingData) => {
     }
 }
 
+export const updateOpening = async (openingId, updatedData) => {
+    try {
+        const openingsCollectionRef = doc(db, "openings", openingId);
+        const dataToUpdate = {
+            ...updatedData,
+            time: getFirestoreTimestamp(), // Actualiza el timestamp
+        };
+
+        await updateDoc(openingsCollectionRef, dataToUpdate);
+        console.log("Proceso de actualización de opening");
+        return true;
+    } catch (error) {
+        console.error(error);
+        return false;
+    }
+}
+
 export const deleteElementInOpening = async (openingId) => {
     try {
         // Obtén una referencia al documento que deseas eliminar
