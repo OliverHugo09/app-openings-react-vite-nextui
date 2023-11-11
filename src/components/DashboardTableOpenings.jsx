@@ -1,6 +1,5 @@
 import {
-    Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, User, Chip, Tooltip,
-    Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure, Dropdown,
+    Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, User, Chip, Tooltip, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure, Dropdown,
     DropdownTrigger, DropdownMenu, DropdownItem, Button
 } from "@nextui-org/react"
 import { EditIcon } from "../icons/EditIcon"
@@ -10,6 +9,8 @@ import { useCallback, useState } from "react"
 import { useOpenings } from "../context/OpeningsProvider"
 import { deleteElementInOpening } from "../helpers/crudOpenings"
 import { FormUpdateOpening } from "../components/FormUpdateOpening"
+import Swal from 'sweetalert2'
+import '@sweetalert2/theme-dark/dark.css'
 
 const statusColorMap = {
     active: "success",
@@ -95,8 +96,24 @@ export const DashboardTableOpenings = () => {
     }
 
     const handleDeleteOpening = (openingId) => {
-        // Llama a la función para eliminar el elemento en una apertura específica
-        deleteElementInOpening(openingId)
+        Swal.fire({
+            title: "¿Estás seguro?",
+            text: "No podrás revertir esto",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "¡Sí, bórralo!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteElementInOpening(openingId)
+                Swal.fire({
+                    title: "!Borrado!",
+                    text: "Tu opening ha sido borrado.",
+                    icon: "success"
+                });
+            }
+        });
     }
 
     const renderCell = useCallback((opening, columnKey) => {
@@ -190,6 +207,7 @@ export const DashboardTableOpenings = () => {
                                                         src={selectedServer || (selectedOpening?.video[0]?.url || "")}
                                                         className="block w-full"
                                                         height={300}
+                                                        allowfullscreen="true" style="border: 0"
                                                     />
                                                 </div>
                                             </div>
@@ -216,7 +234,7 @@ export const DashboardTableOpenings = () => {
                                     </section>
                                 ) : (
                                     updateOpening ? (
-                                        <FormUpdateOpening openingId={updateOpening.id} />
+                                        <FormUpdateOpening openingId={updateOpening.id} onClose={onClose} />
                                     ) : (
                                         <p>Selecciona una apertura para ver los detalles o muestra el formulario de edición.</p>
                                     )
@@ -232,7 +250,6 @@ export const DashboardTableOpenings = () => {
                     )}
                 </ModalContent>
             </Modal>
-
         </>
     )
 }

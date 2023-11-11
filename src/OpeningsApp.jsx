@@ -9,19 +9,20 @@ import { AdminPanelApp } from './AdminPanelApp'
 export const OpeningsApp = () => {
 
     return (
-        <OpeningsProvider>
+        <>
             <NavBar />
-            <main className="container mx-auto mb-5 mt-4">
-                <Routes>
-                    {/* <Route index element={<HomePage />} /> */}
-                    <Route path="/admin/*" element={<AdminPanelApp />} />
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="/opening/:openingId" element={<OpeningsPage />} />
-                    <Route path="/login" element={<LoginPage />} />
-                    <Route path="*" element={<Navigate to="/" />} />
-                </Routes>
-            </main>
-        </OpeningsProvider>
-
+            <OpeningsProvider>
+                <main className="container mx-auto mb-5 mt-4">
+                    <Routes>
+                        {/* <Route index element={<HomePage />} /> */}
+                        <Route path="/admin/*" element={<AdminPanelApp />} />
+                        <Route path="/" element={<HomePage />} />
+                        <Route path="/opening/:openingId" element={<OpeningsPage />} />
+                        <Route path="/login" element={<LoginPage />} />
+                        <Route path="*" element={<Navigate to="/" />} />
+                    </Routes>
+                </main>
+            </OpeningsProvider>
+        </>
     )
 }

@@ -1,9 +1,11 @@
-import { useState } from "react";
-import { Button } from "@nextui-org/react";
-import { addOpening } from "../helpers/crudOpenings";
+import { useState } from "react"
+import { Button } from "@nextui-org/react"
+import { addOpening } from "../helpers/crudOpenings"
+import Swal from 'sweetalert2'
+import '@sweetalert2/theme-dark/dark.css'
 
 export const FormAddOpening = () => {
-    const [displayImageInput, setDisplayImageInput] = useState(true);
+    const [displayImageInput, setDisplayImageInput] = useState(true)
     const [formData, setFormData] = useState({
         img: "https://placehold.co/300x170",
         anime: "",
@@ -13,60 +15,67 @@ export const FormAddOpening = () => {
         ],
         status: "active",
         reported: 0
-    });
+    })
 
     const handleChangeInputImage = () => {
-        setDisplayImageInput(!displayImageInput);
+        setDisplayImageInput(!displayImageInput)
     }
 
     const handleInputChange = (e, index) => {
-        const { name, value } = e.target;
-        const updatedVideo = [...formData.video];
-        updatedVideo[index][name] = value;
+        const { name, value } = e.target
+        const updatedVideo = [...formData.video]
+        updatedVideo[index][name] = value
 
         setFormData((prevData) => ({
             ...prevData,
             video: updatedVideo
-        }));
+        }))
     }
 
     const addVideoField = () => {
         setFormData((prevData) => ({
             ...prevData,
             video: [...prevData.video, { service: "", url: "" }]
-        }));
+        }))
     }
 
     const removeVideoField = (index) => {
-        const updatedVideo = [...formData.video];
-        updatedVideo.splice(index, 1);
+        const updatedVideo = [...formData.video]
+        updatedVideo.splice(index, 1)
 
         setFormData((prevData) => ({
             ...prevData,
             video: updatedVideo
-        }));
+        }))
     }
 
     const capitalizeText = (text) => {
-        return text.replace(/\b\w/g, (match) => match.toUpperCase());
+        return text.replace(/\b\w/g, (match) => match.toUpperCase())
     }
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
+        e.preventDefault()
 
         // Convertir el valor del campo 'title' a mayúsculas
+        // Capitalizar el valor del campo 'anime' antes de enviarlo
         const formDataCopy = {
             ...formData,
             title: formData.title.toUpperCase(),
-        };
-        // Capitalizar el valor del campo 'anime' antes de enviarlo
-        formDataCopy.anime = capitalizeText(formDataCopy.anime);
+            anime: capitalizeText(formData.anime),
+        }
 
         // Envía formDataCopy a Firebase o realiza otras acciones necesarias
-        const newOpeningId = await addOpening(formDataCopy);
-        console.log("Se creó con éxito");
+        const newOpeningId = await addOpening(formDataCopy)
+        console.log("Se creó con éxito")
         if (newOpeningId) {
             // Éxito: el opening se agregó correctamente, puedes realizar acciones adicionales aquí
+            Swal.fire({
+                icon: "success",
+                title: "Se ha creado correctamente",
+                text: "Puedes seguir agregando más openings.",
+                showConfirmButton: false,
+                timer: 1500
+            })
 
             // Reiniciar el estado a sus valores iniciales después de enviar
             setFormData({
@@ -75,10 +84,10 @@ export const FormAddOpening = () => {
                 title: "",
                 video: [{ service: "", url: "" }],
                 status: "active",
-            });
+            })
         } else {
             // Error: maneja el error apropiadamente
-            console.log("Error");
+            console.log("Error")
         }
     }
 

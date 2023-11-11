@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
-import { Button } from "@nextui-org/react";
-import { updateOpening, fetchOpeningById } from "../helpers/crudOpenings"; // Añade la función de actualización y la función de búsqueda por ID
+import { useState, useEffect } from "react"
+import { Button } from "@nextui-org/react"
+import { updateOpening, fetchOpeningById } from "../helpers/crudOpenings"
 
-export const FormUpdateOpening = ({ openingId }) => {
-    const [displayImageInput, setDisplayImageInput] = useState(true);
+export const FormUpdateOpening = ({ openingId, onClose }) => {
+    const [displayImageInput, setDisplayImageInput] = useState(true)
     const [formData, setFormData] = useState({
         img: "https://placehold.co/300x170",
         anime: "",
@@ -13,67 +13,85 @@ export const FormUpdateOpening = ({ openingId }) => {
         ],
         status: "active",
         reported: 0
-    });
+    })
 
     useEffect(() => {
         // Carga los datos del opening existente usando el ID proporcionado
         const loadOpeningData = async () => {
-            const openingData = await fetchOpeningById(openingId);
+            const openingData = await fetchOpeningById(openingId)
 
             if (openingData) {
-                setFormData(openingData);
+                setFormData(openingData)
             }
-        };
+        }
 
-        loadOpeningData();
-    }, [openingId]);
+        loadOpeningData()
+    }, [openingId])
 
     const handleChangeInputImage = () => {
-        setDisplayImageInput(!displayImageInput);
+        setDisplayImageInput(!displayImageInput)
     }
 
     const handleInputChange = (e, index) => {
-        const { name, value } = e.target;
-        const updatedVideo = [...formData.video];
-        updatedVideo[index][name] = value;
+        const { name, value } = e.target
+        const updatedVideo = [...formData.video]
+        updatedVideo[index][name] = value
 
         setFormData((prevData) => ({
             ...prevData,
             video: updatedVideo
-        }));
+        }))
     }
 
     const addVideoField = () => {
         setFormData((prevData) => ({
             ...prevData,
             video: [...prevData.video, { service: "", url: "" }]
-        }));
+        }))
     }
 
     const removeVideoField = (index) => {
-        const updatedVideo = [...formData.video];
-        updatedVideo.splice(index, 1);
+        const updatedVideo = [...formData.video]
+        updatedVideo.splice(index, 1)
 
         setFormData((prevData) => ({
             ...prevData,
             video: updatedVideo
-        }));
+        }))
     }
 
     const capitalizeText = (text) => {
-        return text.replace(/\b\w/g, (match) => match.toUpperCase());
+        return text.replace(/\b\w/g, (match) => match.toUpperCase())
     }
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
+        e.preventDefault()
+
+        // Convertir el valor del campo 'title' a mayúsculas
+        // Capitalizar el valor del campo 'anime' antes de enviarlo
+        const formDataCopy = {
+            ...formData,
+            title: formData.title.toUpperCase(),
+            anime: capitalizeText(formData.anime),
+        }
 
         // Realiza la actualización del opening utilizando la función de actualización
-        const success = await updateOpening(openingId, formData);
+        const success = await updateOpening(openingId, formDataCopy)
 
         if (success) {
-            console.log("Se actualizó con éxito");
+            Swal.fire({
+                icon: "success",
+                title: "Se ha actualizado correctamente",
+                showConfirmButton: false,
+            })
+            onClose()
         } else {
-            console.log("Error al actualizar");
+            Swal.fire({
+                icon: "warning",
+                title: "Ha ocurrido un error",
+                showConfirmButton: false,
+            })
+            onClose()
         }
     }
 
@@ -210,7 +228,6 @@ export const FormUpdateOpening = ({ openingId }) => {
                 </div>
             </div>
             <div className="mt-6 flex items-center justify-end gap-x-6">
-                <button type="button" className="text-sm font-semibold leading-6">Cancel</button>
                 <button type="submit" className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Save</button>
             </div>
         </form>

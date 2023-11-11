@@ -1,4 +1,3 @@
-
 export const login = () => {
 
     if (email === user.email && password === user.password) {
