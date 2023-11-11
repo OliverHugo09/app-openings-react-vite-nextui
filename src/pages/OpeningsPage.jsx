@@ -2,6 +2,7 @@ import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@
 import { useEffect, useState } from "react"
 import { fetchOpeningById } from "../helpers/crudOpenings"
 import { useParams } from "react-router-dom"
+import "../styles/test.css"
 
 export const OpeningsPage = () => {
     const [selectedOpening, setSelectedOpening] = useState(null)
@@ -25,12 +26,12 @@ export const OpeningsPage = () => {
     }
     // Fix iframe to embed code
     return (
-        <section className="w-full flex flex-col justify-center items-center">
+        <section className="w-full flex flex-col">
             {selectedServer ? (
                 <>
                     <div className="">
-                        <div className="h-full max-w-full">
-                            <div className="max-h-screen max-w-full ">
+                        <div className="">
+                            <div className="max-h-screen ">
                                 {/* Aquí se utiliza dangerouslySetInnerHTML para renderizar el fragmento de código HTML */}
                                 <div dangerouslySetInnerHTML={{ __html: selectedServer }} />
                             </div>

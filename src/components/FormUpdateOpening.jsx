@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react"
 import { Button } from "@nextui-org/react"
 import { updateOpening, fetchOpeningById } from "../helpers/crudOpenings"
+import Swal from 'sweetalert2'
+import '@sweetalert2/theme-dark/dark.css'
 
 export const FormUpdateOpening = ({ openingId, onClose }) => {
     const [displayImageInput, setDisplayImageInput] = useState(true)

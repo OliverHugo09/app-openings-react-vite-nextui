@@ -1,5 +1,5 @@
 import { OpeningsContext } from "./OpeningsContext"
-import { useContext, useCallback, useMemo } from "react"
+import { useContext } from "react"
 import { useOpeningsData } from "../hooks/useOpeningsData"
 
 export const useOpenings = () => {
