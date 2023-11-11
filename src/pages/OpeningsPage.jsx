@@ -8,36 +8,16 @@ export const OpeningsPage = () => {
     const [selectedServer, setSelectedServer] = useState(null)
     const { openingId } = useParams()
 
-    // Función para validar si es una URL
-    const isValidUrl = (url) => {
-        try {
-            new URL(url);
-            return true;
-        } catch (error) {
-            return false;
-        }
-    }
-
     useEffect(() => {
+        // Utiliza el 'openingId' obtenido de la ruta en lugar de un valor estático
         const fetchOpening = async () => {
-            try {
-                const opening = await fetchOpeningById(openingId);
-                setSelectedOpening(opening);
-                if (opening && opening.video.length > 0) {
-                    const firstVideoUrl = opening.video[0].url;
-                    if (isValidUrl(firstVideoUrl)) {
-                        setSelectedServer(firstVideoUrl);
-                    } else {
-                        console.error("La URL del video no es válida:", firstVideoUrl);
-                        setSelectedServer(null);
-                    }
-                }
-            } catch (error) {
-                console.error("Error fetching opening:", error);
-                setSelectedOpening(""); // Set to an empty string to trigger the 404 section
+            const opening = await fetchOpeningById(openingId)
+            setSelectedOpening(opening)
+            if (opening && opening.video.length > 0) {
+                setSelectedServer(opening.video[0].url)
             }
-        };
-        fetchOpening();
+        }
+        fetchOpening()
     }, [openingId])
 
     const handleSelectServer = (server) => {
@@ -45,29 +25,21 @@ export const OpeningsPage = () => {
     }
     // Fix iframe to embed code
     return (
-        <section className="w-full flex flex-col justify-center h-auto">
-            {selectedServer && isValidUrl(selectedServer) ? (
+        <section className="w-full flex flex-col justify-center items-center">
+            {selectedServer ? (
                 <>
-                    <div className="relative">
-                        <div className="relative w-full overflow-hidden after:clear-both after:block after:content-['']">
-                            <div className="relative float-left -mr-[100%] w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none">
-                                <iframe
-                                    src={selectedServer || (selectedOpening?.video[0]?.url || "")}
-                                    className="block w-full"
-                                    height={300}
-                                    allowFullScreen={true}
-                                />
+                    <div className="">
+                        <div className="h-full max-w-full">
+                            <div className="max-h-screen max-w-full ">
+                                {/* Aquí se utiliza dangerouslySetInnerHTML para renderizar el fragmento de código HTML */}
+                                <div dangerouslySetInnerHTML={{ __html: selectedServer }} />
                             </div>
                         </div>
                     </div>
                     <div className="grid mt-2 place-items-center">
                         <Dropdown>
                             <DropdownTrigger>
-                                <Button
-                                    variant="bordered"
-                                >
-                                    Selecciona un servidor
-                                </Button>
+                                <Button variant="bordered">Selecciona un servidor</Button>
                             </DropdownTrigger>
                             <DropdownMenu variant="faded" aria-label="Static Actions">
                                 {selectedOpening?.video.map((server, index) => (
@@ -79,8 +51,9 @@ export const OpeningsPage = () => {
                         </Dropdown>
                     </div>
                 </>
+
             ) : (
-                <main className="w-full flex flex-col justify-center items-center">
+                <>
                     <h1 className="text-9xl font-extrabold text-white tracking-widest">400</h1>
                     <div className="bg-[#FF6A3D] px-2 text-sm rounded rotate-12 absolute">
                         Bad Request
@@ -98,7 +71,7 @@ export const OpeningsPage = () => {
                             </span>
                         </a>
                     </button>
-                </main>
+                </>
 
             )}
         </section>
