@@ -44,15 +44,15 @@ export const NavBar = () => {
 
                 </NavbarItem>
                 <NavbarItem>
-                    {!user ?
+                    {!user ? (
                         <NavLink to='/login'>
                             <span className="text-blue-600">Login</span>
                         </NavLink>
-                        :
+                    ) : (
                         <NavLink to='/' onClick={handleLogout}>
                             <span className="text-blue-600">Logout</span>
                         </NavLink>
-                    }
+                    )}
                 </NavbarItem>
             </NavbarContent>
         </Navbar>

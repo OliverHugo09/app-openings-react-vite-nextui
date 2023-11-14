@@ -85,6 +85,7 @@ export const FormUpdateOpening = ({ openingId, onClose }) => {
                 icon: "success",
                 title: "Se ha actualizado correctamente",
                 showConfirmButton: false,
+                timer: 1500
             })
             onClose()
         } else {

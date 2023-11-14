@@ -15,12 +15,21 @@ export const AuthProvider = ({ children }) => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        // Utiliza el 'openingId' obtenido de la ruta en lugar de un valor estático
         const fetchUser = async () => {
-            const userbyId = await fetchUsersById(userId)
-            setUserValidation(userbyId)
-            console.log("ejecución del usuario provider")
+            try {
+                const userbyId = await fetchUsersById(userId)
+
+                if (userbyId) {
+                    setUserValidation(userbyId)
+                } else {
+                    // Manejar el caso cuando no se encuentra el usuario
+                    console.log("Usuario no encontrado")
+                }
+            } catch (error) {
+                console.error("Error fetching user:", error)
+            }
         }
+
         fetchUser()
     }, [userId])
 
