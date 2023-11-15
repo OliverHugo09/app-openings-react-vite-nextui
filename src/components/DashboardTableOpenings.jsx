@@ -199,28 +199,15 @@ export const DashboardTableOpenings = () => {
                             </ModalHeader>
                             <ModalBody>
                                 {selectedOpening ? (
-                                    <section className="grid grid-cols-1">
-                                        <div className="relative">
-                                            <div className="relative w-full overflow-hidden after:clear-both after:block after:content-['']">
-                                                <div className="relative float-left -mr-[100%] w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none">
-                                                    <iframe
-                                                        src={selectedServer || (selectedOpening?.video[0]?.url || "")}
-                                                        className="block w-full"
-                                                        height={300}
-                                                        allowfullscreen="true" style="border: 0"
-                                                    />
-                                                </div>
-                                            </div>
+                                    <>
+                                        <div className="video-container">
+                                            {/* Aquí se utiliza dangerouslySetInnerHTML para renderizar el fragmento de código HTML */}
+                                            <div dangerouslySetInnerHTML={{ __html: selectedServer }} />
                                         </div>
-
-                                        <div className="grid grid-cols-1 gap-2 mt-2 place-items-center">
+                                        <div className="grid mt-2 place-items-center">
                                             <Dropdown>
                                                 <DropdownTrigger>
-                                                    <Button
-                                                        variant="bordered"
-                                                    >
-                                                        Selecciona un servidor
-                                                    </Button>
+                                                    <Button variant="bordered">Selecciona un servidor</Button>
                                                 </DropdownTrigger>
                                                 <DropdownMenu variant="faded" aria-label="Static Actions">
                                                     {selectedOpening?.video.map((server, index) => (
@@ -231,7 +218,7 @@ export const DashboardTableOpenings = () => {
                                                 </DropdownMenu>
                                             </Dropdown>
                                         </div>
-                                    </section>
+                                    </>
                                 ) : (
                                     updateOpening ? (
                                         <FormUpdateOpening openingId={updateOpening.id} onClose={onClose} />
