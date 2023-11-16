@@ -210,7 +210,7 @@ export const FormUpdateOpening = ({ openingId, onClose }) => {
                                     </div>
                                 </div>
                                 <div className="sm:col-span-3 mb-2">
-                                    <label htmlFor="service" className="block text-sm font-medium leading-6">URL</label>
+                                    <label htmlFor="service" className="block text-sm font-medium leading-6">Código embed/iframe</label>
                                     <div className="mt-2">
                                         <input
                                             type="text"
