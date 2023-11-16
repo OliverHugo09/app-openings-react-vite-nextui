@@ -11,6 +11,7 @@ import { deleteElementInOpening } from "../helpers/crudOpenings"
 import { FormUpdateOpening } from "../components/FormUpdateOpening"
 import Swal from 'sweetalert2'
 import '@sweetalert2/theme-dark/dark.css'
+import "../styles/video-container.css"
 
 const statusColorMap = {
     active: "success",
@@ -95,6 +96,12 @@ export const DashboardTableOpenings = () => {
         setSelectedServer(server.url)
     }
 
+    const handleRenderFirstVideo = (opening) => {
+        if (opening.video && opening.video.length > 0) {
+            setSelectedServer(opening.video[0].url);
+        }
+    }
+
     const handleDeleteOpening = (openingId) => {
         Swal.fire({
             title: "¿Estás seguro?",
@@ -149,7 +156,7 @@ export const DashboardTableOpenings = () => {
                                 className="text-lg text-default-400 bg-transparent"
                                 isIconOnly
                                 onPress={() => {
-                                    handleOpening(opening) // Cambiar 'item' a 'opening'
+                                    handleOpening(opening), handleRenderFirstVideo(opening) // Cambiar 'item' a 'opening'
 
                                 }}>
                                 <EyeFilledIcon />
