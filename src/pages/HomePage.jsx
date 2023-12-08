@@ -27,8 +27,8 @@ export const HomePage = () => {
     }
 
     const nextPage = () => {
-        const nextElements = openings.slice(currentPage + 12, currentPage + 24)
-        if (nextElements.length > 0) {
+
+        if (openings.filter(opening => opening.anime.includes(search)).length > currentPage + 12) {
             setCurrentPage(currentPage + 12)
         }
     }
