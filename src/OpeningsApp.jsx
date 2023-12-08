@@ -12,7 +12,7 @@ export const OpeningsApp = () => {
         <>
             <NavBar />
             <OpeningsProvider>
-                <main className="container mx-auto mb-5 mt-4">
+                <main className="container mx-auto mb-2 mt-1">
                     <Routes>
                         {/* <Route index element={<HomePage />} /> */}
                         <Route path="/admin/*" element={<AdminPanelApp />} />
