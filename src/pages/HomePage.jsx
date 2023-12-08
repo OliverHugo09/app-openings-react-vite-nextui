@@ -1,10 +1,10 @@
 import { CardOpening } from "../components/CardOpening"
-import { Button, Input } from "@nextui-org/react";
-import { useOpenings } from "../context/OpeningsProvider";
-import { useState } from "react";
-import { ArrowLeftIcon } from "../icons/ArrowLeftIcon";
-import { ArrowRightIcon } from "../icons/ArrowRightIcon";
-import { SearchIcon } from "../icons/SearchIcon";
+import { Button, Input } from "@nextui-org/react"
+import { useOpenings } from "../context/OpeningsProvider"
+import { useState } from "react"
+import { ArrowLeftIcon } from "../icons/ArrowLeftIcon"
+import { ArrowRightIcon } from "../icons/ArrowRightIcon"
+import { SearchIcon } from "../icons/SearchIcon"
 
 export const HomePage = () => {
 
@@ -27,9 +27,9 @@ export const HomePage = () => {
     }
 
     const nextPage = () => {
-        const nextElements = openings.slice(currentPage + 12, currentPage + 24);
+        const nextElements = openings.slice(currentPage + 12, currentPage + 24)
         if (nextElements.length > 0) {
-            setCurrentPage(currentPage + 12);
+            setCurrentPage(currentPage + 12)
         }
     }
 
@@ -39,7 +39,7 @@ export const HomePage = () => {
     }
 
     const onSearchChange = (e) => {
-        setCurrentPage(0);
+        setCurrentPage(0)
         setSearch(e.target.value)
     }
 

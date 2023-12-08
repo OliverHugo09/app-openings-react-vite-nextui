@@ -15,40 +15,40 @@ export const OpeningsPage = () => {
     useEffect(() => {
         const fetchOpening = async () => {
             try {
-                const opening = await fetchOpeningById(openingId);
+                const opening = await fetchOpeningById(openingId)
                 if (opening) {
-                    setSelectedOpening(opening);
+                    setSelectedOpening(opening)
                     if (opening.video.length > 0) {
-                        setSelectedServer(opening.video[0].url);
+                        setSelectedServer(opening.video[0].url)
                     }
                 } else {
-                    setError("Opening not found");
+                    setError("Opening not found")
                 }
             } catch (error) {
-                console.error("Error fetching opening:", error);
-                setError("Error fetching opening");
+                console.error("Error fetching opening:", error)
+                setError("Error fetching opening")
             } finally {
-                setLoading(false);
+                setLoading(false)
             }
-        };
+        }
 
-        fetchOpening();
-    }, [openingId]);
+        fetchOpening()
+    }, [openingId])
 
     const handleSelectServer = async (server) => {
-        setLoading(true); // Indicar que se está cambiando el servidor
+        setLoading(true) // Indicar que se está cambiando el servidor
 
         try {
             // Puedes realizar alguna lógica adicional si es necesario antes de cambiar el servidor
 
             // Simular un retraso de 1 segundo antes de cambiar el servidor
-            await new Promise((resolve) => setTimeout(resolve, 2000));
+            await new Promise((resolve) => setTimeout(resolve, 2000))
 
-            setSelectedServer(server.url);
+            setSelectedServer(server.url)
         } catch (error) {
-            console.error("Error changing server:", error);
+            console.error("Error changing server:", error)
         } finally {
-            setLoading(false); // Indicar que ha terminado el cambio del servidor
+            setLoading(false) // Indicar que ha terminado el cambio del servidor
         }
     }
     // Fix error screen

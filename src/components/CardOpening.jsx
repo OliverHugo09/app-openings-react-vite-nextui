@@ -1,5 +1,5 @@
-import { Card, CardHeader, CardBody, Image, Pagination } from "@nextui-org/react";
-import { Link } from "react-router-dom"; // Importa el componente Link de react-router-dom
+import { Card, CardHeader, CardBody, Image, Pagination } from "@nextui-org/react"
+import { Link } from "react-router-dom"
 
 export const CardOpening = ({ filteredOpenings }) => {
 
