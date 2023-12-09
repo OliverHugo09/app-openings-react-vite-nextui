@@ -6,7 +6,6 @@ import { EditIcon } from "../icons/EditIcon"
 import { DeleteIcon } from "../icons/DeleteIcon"
 import { EyeFilledIcon } from "../icons/EyeFilledIcon"
 import { useCallback, useState } from "react"
-import { useOpenings } from "../context/OpeningsProvider"
 import { deleteElementInOpening } from "../helpers/crudOpenings"
 import { FormUpdateOpening } from "../components/FormUpdateOpening"
 import Swal from 'sweetalert2'
@@ -73,9 +72,8 @@ const getCellValue = (opening, columnKey) => {
     return opening[columnKey] || "Valor no disponible"
 }
 
-export const DashboardTableOpenings = () => {
+export const DashboardTableOpenings = ({ filteredOpenings }) => {
     const { isOpen, onOpen, onOpenChange } = useDisclosure()
-    const { openings } = useOpenings()
     const [selectedOpening, setSelectedOpening] = useState(null)
     const [updateOpening, setUpdateOpening] = useState(null)
     const [selectedServer, setSelectedServer] = useState(null)
@@ -189,7 +187,7 @@ export const DashboardTableOpenings = () => {
                         </TableColumn>
                     )}
                 </TableHeader>
-                <TableBody items={openings} emptyContent={"No existe contenido para mostrar"}>
+                <TableBody items={filteredOpenings()} emptyContent={"No existe contenido para mostrar"}>
                     {(item) => (
                         <TableRow key={item.id}>
                             {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
