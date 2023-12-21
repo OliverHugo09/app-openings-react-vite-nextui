@@ -24,3 +24,4 @@ La aplicación Openings Cloud es una herramienta versátil diseñada para facili
 - Conexión a FireStore (Servicio de FireBase)
 - Fetch a los servicios de FireStore
 - Uso de variables de entorno para proteger los datos de las conexiones a diferentes servicios
+- Boton para cargar otro servicio/iframe
